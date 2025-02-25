@@ -32,6 +32,15 @@ public class Main {
 //            t1.join();
 //            t2.join();
 //        } catch (InterruptedException e) {
+        // Properly shutting down the executor
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                executor.shutdownNow(); // Force shutdown if not finished
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+        }
             System.out.println(" main thread continued ..."+ Thread.currentThread().getName());
 
 
